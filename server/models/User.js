@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { Email } = require("@mui/icons-material");
 
 const userSchema = new mongoose.Schema(
   {
