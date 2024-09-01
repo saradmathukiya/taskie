@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setToken, setUserData } from "../slice/authSlice";
 
 const LoginPage = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -14,14 +15,10 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await apiConnector(
-        "POST",
-        "http://localhost:4000/api/v1/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await apiConnector("POST", BASE_URL + "/api/v1/login", {
+        email,
+        password,
+      });
       toast.success("Logged in successfully!");
       dispatch(setToken(response.data.token));
       dispatch(setUserData(response.data.user));

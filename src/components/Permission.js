@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Permission = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const { token } = useSelector((state) => state.auth);
@@ -17,7 +18,7 @@ const Permission = () => {
     try {
       const response = await apiConnector(
         "GET",
-        "http://localhost:4000/api/v1/admin/users",
+        BASE_URL + "/api/v1/admin/users",
         {},
         {
           Authorization: `Bearer ${token}`,
@@ -38,7 +39,7 @@ const Permission = () => {
     try {
       await apiConnector(
         "PUT",
-        "http://localhost:4000/api/v1/admin/updatePermissions",
+        BASE_URL + "/api/v1/admin/updatePermissions",
         {
           userId: selectedUser._id,
           canCreateLocation: selectedUser.permissions.canCreateLocation,

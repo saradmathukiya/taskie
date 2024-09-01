@@ -4,6 +4,7 @@ import { apiConnector } from "../apiConnector";
 import toast from "react-hot-toast";
 
 const SignupPage = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +15,7 @@ const SignupPage = () => {
     try {
       const response = await apiConnector(
         "POST",
-        "http://localhost:4000/api/v1/register",
+        BASE_URL + "/api/v1/register",
         {
           username,
           email,
