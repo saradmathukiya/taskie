@@ -28,6 +28,13 @@ app.use("/api/v1", taskRoutes);
 app.use("/api/v1", locationRoutes);
 app.use("/api/v1/admin", adminRoutes);
 
+app.get("/", (req, res) => {
+  return res.json({
+    success: true,
+    message: "Yup! the  server is running",
+  });
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
