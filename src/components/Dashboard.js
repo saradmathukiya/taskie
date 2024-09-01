@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiConnector } from "../apiConnector";
+import toast from "react-hot-toast";
 
 // Sample Data
 const moduleData = [
@@ -25,9 +27,54 @@ const updates = [
 ];
 
 const Dashboard = () => {
-  const [tasksCount] = useState(3); // Example task count
-  const [locationsCount] = useState(3); // Example location count
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+  const [tasksCount, setTasksCount] = useState(0);
+  const [locationsCount, setLocationsCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [companyUpdates, setCompanyUpdates] = useState();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchTasksCount();
+    fetchLocationsCount();
+    fetchCompanyUpdates();
+  }, []);
+
+  const fetchTasksCount = async () => {
+    setLoading(true);
+    try {
+      const response = await apiConnector("GET", BASE_URL + "/api/v1/getTask");
+      setTasksCount(response?.data?.length || 0);
+    } catch (error) {
+      console.error("Failed to fetch tasks count", error);
+    }
+    setLoading(false);
+  };
+
+  const fetchCompanyUpdates = async () => {
+    try {
+      const response = await apiConnector("GET", BASE_URL + "/api/v1/updates");
+      setCompanyUpdates(response.data);
+    } catch (error) {
+      toast.error("Failed to fetch company updates");
+      console.error("Error fetching updates:", error);
+    }
+  };
+
+  const fetchLocationsCount = async () => {
+    setLoading(true);
+    try {
+      const response = await apiConnector(
+        "GET",
+        BASE_URL + "/api/v1/getLocation"
+      );
+      setLocationsCount(response?.data?.length || 0);
+    } catch (error) {
+      console.error("Failed to fetch locations count", error);
+    }
+    setLoading(false);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -56,11 +103,15 @@ const Dashboard = () => {
           <h2 className="text-2xl font-semibold mb-4">Overview</h2>
           <div className="flex justify-around w-full">
             <div className="text-center">
-              <h3 className="text-4xl font-bold mb-2">{tasksCount}</h3>
+              <h3 className="text-4xl font-bold mb-2">
+                {loading ? "Loading..." : tasksCount}
+              </h3>
               <p className="text-lg text-gray-600">Tasks</p>
             </div>
             <div className="text-center">
-              <h3 className="text-4xl font-bold mb-2">{locationsCount}</h3>
+              <h3 className="text-4xl font-bold mb-2">
+                {loading ? "Loading..." : locationsCount}
+              </h3>
               <p className="text-lg text-gray-600">Locations</p>
             </div>
           </div>
@@ -70,10 +121,9 @@ const Dashboard = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4">Company Updates</h2>
           <ul>
-            {updates.map((update) => (
+            {companyUpdates?.map((update) => (
               <li key={update.id} className="mb-4">
                 <h3 className="text-lg font-semibold">{update.title}</h3>
-                <p className="text-gray-600">{update.date}</p>
                 <p>{update.description}</p>
               </li>
             ))}

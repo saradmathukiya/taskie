@@ -6,6 +6,7 @@ const taskRoutes = require("./router/task");
 const locationRoutes = require("./router/location");
 const authRoutes = require("./router/authRoutes");
 const adminRoutes = require("./router/adminRoutes");
+const companyUpdateRoutes = require("./router/companyUpdateRoutes");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ app.use("/api/v1", authRoutes);
 app.use("/api/v1", taskRoutes);
 app.use("/api/v1", locationRoutes);
 app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1", companyUpdateRoutes);
 
 app.get("/", (req, res) => {
   return res.json({
