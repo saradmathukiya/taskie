@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { apiConnector } from "../apiConnector";
+import { apiConnector } from "../services/apiConnector";
 import toast from "react-hot-toast";
 
 // Sample Data
