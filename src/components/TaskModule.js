@@ -70,7 +70,7 @@ const TaskModule = () => {
   };
 
   const handleEdit = (task) => {
-    setEditTask(task); // Set the task to be edited
+    setEditTask(task);
   };
 
   const handleUpdate = async (e) => {
@@ -90,7 +90,7 @@ const TaskModule = () => {
       setTasks(
         tasks.map((task) => (task._id === editTask._id ? response.data : task))
       );
-      setEditTask(null); // Reset edit task
+      setEditTask(null);
       toast.success("Task updated successfully");
     } catch (error) {
       toast.error("Failed to update task");

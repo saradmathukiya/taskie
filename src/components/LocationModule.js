@@ -14,7 +14,7 @@ const LocationModule = () => {
     address: "",
     capacity: "",
   });
-  const [editLocation, setEditLocation] = useState(null); // State to handle location editing
+  const [editLocation, setEditLocation] = useState(null);
   const navigate = useNavigate();
 
   const { userData } = useSelector((state) => state.auth);
@@ -72,7 +72,7 @@ const LocationModule = () => {
   };
 
   const handleEdit = (location) => {
-    setEditLocation(location); // Set the location to be edited
+    setEditLocation(location);
   };
 
   const handleUpdate = async (e) => {
@@ -93,7 +93,7 @@ const LocationModule = () => {
           loc._id === editLocation._id ? response.data : loc
         )
       );
-      setEditLocation(null); // Reset edit location
+      setEditLocation(null);
       toast.success("Location updated successfully");
     } catch (error) {
       toast.error("Failed to update location");

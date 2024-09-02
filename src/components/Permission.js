@@ -60,7 +60,7 @@ const Permission = () => {
         }
       );
       toast.success("Permissions updated successfully");
-      fetchUsers(); // Refresh the user list to reflect changes
+      fetchUsers();
       setSelectedUser(null); // Close the modal after update
     } catch (error) {
       toast.error("Failed to update permissions");
